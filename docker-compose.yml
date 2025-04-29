@@ -16,8 +16,6 @@ services:
       dockerfile: ./Dockerfile.servidor
     ports:
       - "8000:80"  # Mapea el puerto 80 del contenedor al puerto 8000 de tu máquina local
-    volumes:
-      - ./vip2cars-api:/var/www/html
     environment:
       - DB_HOST=db
       - DB_DATABASE=vip2cards

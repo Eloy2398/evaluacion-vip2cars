@@ -1,0 +1,163 @@
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" #mdlForm>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" #modalTitle>Agregar Cliente</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form #clienteForm="ngForm" (ngSubmit)="guardar(clienteForm)">
+        <div class="modal-body">
+          <div class="mb-1">
+            <label for="nrodocumento"
+              >Nro. Documento <span class="important">*</span></label
+            >
+            <div>
+              <input
+                class="form-control form-control-sm text-uppercase"
+                type="text"
+                name="nrodocumento"
+                id="nrodocumento"
+                required
+                minlength="6"
+                [ngModel]="cliente.nrodocumento"
+              />
+              <div
+                class="text-danger"
+                *ngIf="
+                  clienteForm.submitted &&
+                  clienteForm.controls['nrodocumento'].invalid
+                "
+              >
+                <span
+                  *ngIf="clienteForm.controls['nrodocumento'].errors?.['required']"
+                  >Este campo es obligatorio.</span
+                >
+                <span
+                  *ngIf="clienteForm.controls['nrodocumento'].errors?.['minlength']"
+                  >Este campo debe tener mínimo 8 caracteres.</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="mb-1">
+            <label for="nombre">Nombre <span class="important">*</span></label>
+            <div>
+              <input
+                class="form-control form-control-sm money"
+                type="text"
+                name="nombre"
+                id="nombre"
+                required
+                minlength="3"
+                [ngModel]="cliente.nombre"
+              />
+              <div
+                class="text-danger"
+                *ngIf="
+                  clienteForm.submitted &&
+                  clienteForm.controls['nombre'].invalid
+                "
+              >
+                <span
+                  *ngIf="clienteForm.controls['nombre'].errors?.['required']"
+                  >Este campo es obligatorio.</span
+                >
+                <span
+                  *ngIf="clienteForm.controls['nombre'].errors?.['minlength']"
+                  >Este campo debe tener mínimo 3 caracteres.</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="mb-1">
+            <label for="apellido"
+              >Apellido <span class="important">*</span></label
+            >
+            <div>
+              <input
+                class="form-control form-control-sm money"
+                type="text"
+                name="apellido"
+                id="apellido"
+                required
+                minlength="3"
+                [ngModel]="cliente.apellido"
+              />
+              <div
+                class="text-danger"
+                *ngIf="
+                  clienteForm.submitted &&
+                  clienteForm.controls['apellido'].invalid
+                "
+              >
+                <span
+                  *ngIf="clienteForm.controls['apellido'].errors?.['required']"
+                  >Este campo es obligatorio.</span
+                >
+                <span
+                  *ngIf="clienteForm.controls['apellido'].errors?.['minlength']"
+                  >Este campo debe tener mínimo 3 caracteres.</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="mb-1">
+            <label for="correo">Correo</label>
+            <div>
+              <input
+                class="form-control form-control-sm money"
+                type="email"
+                name="correo"
+                id="correo"
+                [ngModel]="cliente.correo"
+              />
+              <div
+                class="text-danger"
+                *ngIf="
+                  clienteForm.submitted &&
+                  clienteForm.controls['correo'].invalid
+                "
+              >
+                <span *ngIf="clienteForm.controls['correo'].errors?.['email']"
+                  >Ingrese un correo electrónico válido.</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="mb-1">
+            <label for="telefono">Teléfono </label>
+            <input
+              class="form-control form-control-sm money"
+              type="tel"
+              name="telefono"
+              id="telefono"
+              [ngModel]="cliente.telefono"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="d-flex gap-1">
+            <input
+              type="submit"
+              class="btn btn-primary"
+              name="btnsend"
+              value="Guardar"
+            />
+            <input
+              type="reset"
+              class="btn btn-danger"
+              name="btnclose"
+              value="Cancelar"
+              data-bs-dismiss="modal"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

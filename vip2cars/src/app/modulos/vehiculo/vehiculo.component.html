@@ -1,0 +1,72 @@
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex justify-content-end">
+      <button
+        type="button"
+        class="btn btn-light btn-sm"
+        (click)="abrirFormulario()"
+      >
+        <i class="bi bi-plus"></i> Agregar
+      </button>
+    </div>
+
+    <table class="table table-sm mb-0">
+      <thead>
+        <tr>
+          <th>Placa</th>
+          <th>Marca</th>
+          <th>Modelo</th>
+          <th>Año de Fabricación</th>
+          <th>Doc. Cliente</th>
+          <th>Cliente</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (vehiculoList.length > 0) { @for (vehiculo of vehiculoList; track
+        vehiculo.id) {
+        <tr>
+          <td>{{ vehiculo.placa }}</td>
+          <td>{{ vehiculo.marca }}</td>
+          <td>{{ vehiculo.modelo }}</td>
+          <td>{{ vehiculo.anio_fabricacion }}</td>
+          <td>{{ vehiculo.documento_cliente }}</td>
+          <td>{{ vehiculo.cliente }}</td>
+          <td>
+            <div class="d-flex justify-content-center gap-1">
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-sm"
+                (click)="abrirFormulario(vehiculo.id)"
+              >
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-danger btn-sm"
+                (click)="eliminar(vehiculo.id)"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        }
+        <tr>
+          <td colspan="7">
+            <b>{{ vehiculoList.length }} registro(s)</b>
+          </td>
+        </tr>
+        } @else {
+        <tr>
+          <td colspan="7" class="text-center">
+            Ningún registro para mostrar en esta tabla
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<app-formulario (notificarListaActualizada)="obtenerListaServicio()" />

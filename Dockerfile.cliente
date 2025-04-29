@@ -1,0 +1,23 @@
+# Paso 1: Construir la aplicación Angular
+FROM node:20-alpine AS build
+
+# Crear y establecer el directorio de trabajo
+WORKDIR /app
+
+# Copiar los archivos de la aplicación Angular
+COPY ./vip2cars/package*.json ./
+RUN npm install
+COPY ./vip2cars ./
+RUN npm run build --configuration=production
+
+# Paso 2: Servir la aplicación con Nginx
+FROM nginx:alpine
+
+# Copiar los archivos construidos al contenedor Nginx
+COPY --from=build /app/dist/vip2cars/browser /usr/share/nginx/html
+
+# Exponer el puerto 80
+EXPOSE 80
+
+# Iniciar Nginx
+CMD ["nginx", "-g", "daemon off;"]

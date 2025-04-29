@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  cliente:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.cliente
+    ports:
+      - "4200:80"  # Mapea el puerto 80 del contenedor al puerto 4200 de tu máquina local
+    networks:
+      - app-network
+
+  servidor:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.servidor
+    ports:
+      - "8000:80"  # Mapea el puerto 80 del contenedor al puerto 8000 de tu máquina local
+    volumes:
+      - ./vip2cars-api:/var/www/html
+    environment:
+      - DB_HOST=db
+      - DB_DATABASE=vip2cards
+      - DB_USERNAME=root
+      - DB_PASSWORD=psw1234
+    depends_on:
+      - db
+    networks:
+    - app-network
+
+  # Servicio para la base de datos (MySQL)
+  db:
+    image: mysql:8.3.0
+    environment:
+      MYSQL_ROOT_PASSWORD: psw1234
+      MYSQL_DATABASE: vip2cards
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    networks:
+      - app-network
+      
+# Red para que los contenedores puedan comunicarse entre sí
+networks:
+  app-network:
+    driver: bridge
+
+# Volumen para persistir los datos de la base de datos
+volumes:
+  db_data:
+    driver: local

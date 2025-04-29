@@ -1,0 +1,218 @@
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" #mdlForm>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" #modalTitle>Agregar Vehículo</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form #vehiculoForm="ngForm" (ngSubmit)="guardar(vehiculoForm)">
+        <div class="modal-body">
+          <div class="mb-1">
+            <label for="id_cliente"
+              >Cliente <span class="important">*</span></label
+            >
+            <div>
+              <div class="input-group input-group-sm">
+                <select
+                  name="id_cliente"
+                  id="id_cliente"
+                  class="form-control form-control-sm"
+                  required
+                  [ngModel]="vehiculo.id_cliente"
+                >
+                  @for (cliente of clienteList; track cliente.id) {
+                  <option value="{{ cliente.id }}">
+                    {{ cliente.nombre }} {{ cliente.apellido }}
+                  </option>
+                  }
+                </select>
+                <div class="input-group-append">
+                  <button
+                    type="button"
+                    class="btn btn-outline-info"
+                    (click)="nuevoCliente()"
+                  >
+                    <i class="bi bi-plus"></i>
+                  </button>
+                </div>
+                <div class="input-group-append">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    (click)="
+                      mostrarClienteEditar(
+                        vehiculoForm.controls['id_cliente'].value
+                      )
+                    "
+                  >
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="text-danger"
+                *ngIf="
+                  vehiculoForm.submitted &&
+                  vehiculoForm.controls['id_cliente'].invalid
+                "
+              >
+                <span
+                  *ngIf="vehiculoForm.controls['id_cliente'].errors?.['required']"
+                  >Este campo es obligatorio.</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="mb-1">
+            <label for="placa">Placa <span class="important">*</span></label>
+            <div>
+              <input
+                class="form-control form-control-sm text-uppercase"
+                type="text"
+                name="placa"
+                id="placa"
+                required
+                maxlength="6"
+                minlength="6"
+                [ngModel]="vehiculo.placa"
+              />
+              <div
+                class="text-danger"
+                *ngIf="
+                  vehiculoForm.submitted &&
+                  vehiculoForm.controls['placa'].invalid
+                "
+              >
+                <span
+                  *ngIf="vehiculoForm.controls['placa'].errors?.['required']"
+                  >Este campo es obligatorio.</span
+                >
+                <span
+                  *ngIf="vehiculoForm.controls['placa'].errors?.['minlength']"
+                  >Este campo debe tener 6 caracteres.</span
+                >
+                <span
+                  *ngIf="vehiculoForm.controls['placa'].errors?.['maxlength']"
+                  >Este campo debe tener 6 caracteres.</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="mb-1">
+            <label for="marca">Marca <span class="important">*</span></label>
+            <div>
+              <input
+                class="form-control form-control-sm money"
+                type="text"
+                name="marca"
+                id="marca"
+                required
+                [ngModel]="vehiculo.marca"
+              />
+              <div
+                class="text-danger"
+                *ngIf="
+                  vehiculoForm.submitted &&
+                  vehiculoForm.controls['marca'].invalid
+                "
+              >
+                <span
+                  *ngIf="vehiculoForm.controls['marca'].errors?.['required']"
+                  >Este campo es obligatorio.</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="mb-1">
+            <label for="modelo">Modelo <span class="important">*</span></label>
+            <div>
+              <input
+                class="form-control form-control-sm money"
+                type="text"
+                name="modelo"
+                id="modelo"
+                required
+                [ngModel]="vehiculo.modelo"
+              />
+              <div
+                class="text-danger"
+                *ngIf="
+                  vehiculoForm.submitted &&
+                  vehiculoForm.controls['modelo'].invalid
+                "
+              >
+                <span
+                  *ngIf="vehiculoForm.controls['modelo'].errors?.['required']"
+                  >Este campo es obligatorio.</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="mb-1">
+            <label for="anio_fabricacion"
+              >Año de fabricación <span class="important">*</span></label
+            >
+            <div>
+              <input
+                class="form-control form-control-sm money"
+                type="text"
+                name="anio_fabricacion"
+                id="anio_fabricacion"
+                required
+                minlength="4"
+                maxlength="4"
+                [ngModel]="vehiculo.anio_fabricacion"
+              />
+              <div
+                class="text-danger"
+                *ngIf="
+                  vehiculoForm.submitted &&
+                  vehiculoForm.controls['anio_fabricacion'].invalid
+                "
+              >
+                <span
+                  *ngIf="vehiculoForm.controls['anio_fabricacion'].errors?.['required']"
+                  >Este campo es obligatorio.</span
+                >
+                <span
+                  *ngIf="vehiculoForm.controls['anio_fabricacion'].errors?.['minlength']"
+                  >Este campo debe tener 4 caracteres.</span
+                >
+                <span
+                  *ngIf="vehiculoForm.controls['anio_fabricacion'].errors?.['maxlength']"
+                  >Este campo debe tener 4 caracteres.</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="d-flex gap-1">
+            <input
+              type="submit"
+              class="btn btn-primary"
+              name="btnsend"
+              value="Guardar"
+            />
+            <input
+              type="reset"
+              class="btn btn-danger"
+              name="btnclose"
+              value="Cancelar"
+              data-bs-dismiss="modal"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<app-formulario-cliente
+  (notificarListaActualizada)="cargarDataInicial($event)"
+/>

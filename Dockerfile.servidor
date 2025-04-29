@@ -1,0 +1,32 @@
+# Usar una imagen base con PHP y Apache
+FROM php:8.1-apache
+
+# Habilitar los módulos de Apache necesarios
+RUN apt-get update && apt-get install -y libpng-dev libjpeg-dev libfreetype6-dev git unzip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd pdo pdo_mysql
+
+# Habilitar el acceso a los archivos
+RUN a2enmod rewrite
+
+RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
+
+# Instalar Composer (gestor de dependencias de PHP)
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Crear y establecer el directorio de trabajo
+WORKDIR /var/www/html
+
+# Copiar los archivos del servidor
+COPY ./vip2cars-api /var/www/html
+
+# Instalar las dependencias de Laravel
+RUN composer install
+
+RUN chown -R www-data:www-data /var/www/html
+
+# Exponer los puertos para el servidor web y PHP-FPM
+EXPOSE 80
+
+# Iniciar el servidor
+CMD ["apache2-foreground"]
